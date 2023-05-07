@@ -1,0 +1,11 @@
+{
+  "key.tabspy.activate":  "Activate Tab Spy",
+  "category.tabspy.name": "Tab Spy",
+  "text.tabspy.status": "Tab Spy is now: ",
+  "text.tabspy.status.active": "Active",
+  "text.tabspy.status.inactive": "Inactive",
+  "text.tabspy.regexerror": "Regex Invalid",
+  "text.autoconfig.tabspy.option.regex": "Regex",
+  "text.autoconfig.tabspy.option.regex.@Tooltip": "Regex that matches the ENTIRE Player Name (sorry!)",
+  "text.autoconfig.tabspy.option.enabledByDefault": "Enabled By Default"
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "tabspy",
+  "version": "${version}",
+  "name": "TabSpy",
+  "description": "Allows for a separate player list, containing player specified by a regex.",
+  "authors": [
+    "Grauly"
+  ],
+  "contact": {
+    "repo": "https://github.com/nilsd/TabSpy"
+  },
+  "license": "MIT",
+  "icon": "assets/tabspy/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "grauly.tabspy.client.TabSpyClient"
+    ],
+    "main": [
+      "grauly.tabspy.TabSpy"
+    ],
+    "modmenu": [
+      "grauly.tabspy.config.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "TabSpy.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}",
+    "cloth-config": ">=10.0.96",
+    "modmenu": ">=6.2.1"
+  }
+}
