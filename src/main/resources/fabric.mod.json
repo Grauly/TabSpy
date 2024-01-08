@@ -3,12 +3,12 @@
   "id": "tabspy",
   "version": "${version}",
   "name": "TabSpy",
-  "description": "Allows for a separate player list, containing player specified by a regex.",
+  "description": "Allows for a separate player list, containing players specified by a regex.",
   "authors": [
     "Grauly"
   ],
   "contact": {
-    "repo": "https://github.com/nilsd/TabSpy"
+    "repo": "https://github.com/grauly/TabSpy"
   },
   "license": "MIT",
   "icon": "assets/tabspy/icon.png",

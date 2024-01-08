@@ -9,27 +9,23 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.GameMode;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static grauly.tabspy.TabSpy.MODID;
 import static grauly.tabspy.TabSpy.regex;
 
 public class TabSpyHudRenderer implements HudRenderCallback {
 
     private static final MinecraftClient mc = MinecraftClient.getInstance();
-    private static final Identifier warningImage = new Identifier(MODID, "textures/icon/icon_regex_warning.png");
-    private static final int warningResolution = 16;
     private static final int nameSpacing = 3;
 
     @Override
     public void onHudRender(DrawContext context, float tickDelta) {
         context.getMatrices().push();
-        int width = mc.getWindow().getScaledWidth();
-        int height = mc.getWindow().getScaledHeight();
+        int screenWidth = mc.getWindow().getScaledWidth();
+        int screenHeight = mc.getWindow().getScaledHeight();
 
         if (mc.player == null || mc.player.networkHandler == null || !TabSpy.isShowing) {
             return;
@@ -38,7 +34,7 @@ public class TabSpyHudRenderer implements HudRenderCallback {
         recompilePattern();
         if (TabSpy.regex == null) {
             Text warningText = Text.translatable("text.tabspy.regexerror");
-            context.drawTextWithShadow(mc.textRenderer,warningText,width - 5 - mc.textRenderer.getWidth(warningText), height/2 - mc.textRenderer.fontHeight/2,-1);
+            context.drawTextWithShadow(mc.textRenderer, warningText, screenWidth - 5 - mc.textRenderer.getWidth(warningText), screenHeight / 2 - mc.textRenderer.fontHeight / 2, -1);
             return;
         }
 
@@ -47,8 +43,8 @@ public class TabSpyHudRenderer implements HudRenderCallback {
         for (PlayerListEntry playerListEntry : relevantPlayerEntries) {
             maxNameWidth = Math.max(mc.textRenderer.getWidth(mc.inGameHud.getPlayerListHud().getPlayerName(playerListEntry)), maxNameWidth);
         }
-        int x = width - maxNameWidth - 5;
-        int y = height / 2 - (relevantPlayerEntries.size() * (mc.textRenderer.fontHeight)) - (relevantPlayerEntries.size() * nameSpacing);
+        int x = screenWidth - maxNameWidth - 5;
+        int y = screenHeight / 2 - (relevantPlayerEntries.size() * (mc.textRenderer.fontHeight)) - (relevantPlayerEntries.size() * nameSpacing);
         for (PlayerListEntry playerListEntry : relevantPlayerEntries) {
             context.drawTextWithShadow(
                     mc.textRenderer,
@@ -64,7 +60,7 @@ public class TabSpyHudRenderer implements HudRenderCallback {
 
     private void recompilePattern() {
         TabSpyConfig config = AutoConfig.getConfigHolder(TabSpyConfig.class).getConfig();
-        if(regex == null || !config.regex.equals(regex.pattern())) {
+        if (regex == null || !config.regex.equals(regex.pattern())) {
             try {
                 regex = Pattern.compile(config.regex);
             } catch (Exception e) {
