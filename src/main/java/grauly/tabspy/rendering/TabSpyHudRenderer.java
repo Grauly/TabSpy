@@ -6,9 +6,8 @@ import grauly.tabspy.mixin.PlayerListHudAccessor;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.PlayerListEntry;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.GameMode;
@@ -27,8 +26,8 @@ public class TabSpyHudRenderer implements HudRenderCallback {
     private static final int nameSpacing = 3;
 
     @Override
-    public void onHudRender(MatrixStack matrices, float tickDelta) {
-        matrices.push();
+    public void onHudRender(DrawContext context, float tickDelta) {
+        context.getMatrices().push();
         int width = mc.getWindow().getScaledWidth();
         int height = mc.getWindow().getScaledHeight();
 
@@ -39,7 +38,7 @@ public class TabSpyHudRenderer implements HudRenderCallback {
         recompilePattern();
         if (TabSpy.regex == null) {
             Text warningText = Text.translatable("text.tabspy.regexerror");
-            DrawableHelper.drawTextWithShadow(matrices,mc.textRenderer,warningText,width - 5 - mc.textRenderer.getWidth(warningText), height/2 - mc.textRenderer.fontHeight/2,-1);
+            context.drawTextWithShadow(mc.textRenderer,warningText,width - 5 - mc.textRenderer.getWidth(warningText), height/2 - mc.textRenderer.fontHeight/2,-1);
             return;
         }
 
@@ -51,8 +50,8 @@ public class TabSpyHudRenderer implements HudRenderCallback {
         int x = width - maxNameWidth - 5;
         int y = height / 2 - (relevantPlayerEntries.size() * (mc.textRenderer.fontHeight)) - (relevantPlayerEntries.size() * nameSpacing);
         for (PlayerListEntry playerListEntry : relevantPlayerEntries) {
-            mc.textRenderer.drawWithShadow(
-                    matrices,
+            context.drawTextWithShadow(
+                    mc.textRenderer,
                     mc.inGameHud.getPlayerListHud().getPlayerName(playerListEntry),
                     x,
                     y,
@@ -60,7 +59,7 @@ public class TabSpyHudRenderer implements HudRenderCallback {
             );
             y += mc.textRenderer.fontHeight + nameSpacing;
         }
-        matrices.pop();
+        context.getMatrices().pop();
     }
 
     private void recompilePattern() {
