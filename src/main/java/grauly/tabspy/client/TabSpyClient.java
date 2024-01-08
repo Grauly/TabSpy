@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
 import org.lwjgl.glfw.GLFW;
@@ -37,12 +38,10 @@ public class TabSpyClient implements ClientModInitializer {
                 MutableText statusText = Text.empty();
                 if (TabSpy.isShowing) {
                     statusText = Text.translatable("text.tabspy.status.active");
-                    statusText.getStyle()
-                            .withColor(TextColor.fromRgb(Color.ofRGB(0, 1, 0).getColor()));
+                    statusText.setStyle(Style.EMPTY.withColor(Color.ofRGB(0f,1f,0f).getColor()));
                 } else {
                     statusText = Text.translatable("text.tabspy.status.inactive");
-                    statusText.getStyle()
-                            .withColor(TextColor.fromRgb(Color.ofRGB(1, 0, 0).getColor()));
+                    statusText.setStyle(Style.EMPTY.withColor(Color.ofRGB(1f, 0f, 0f).getColor()));
                 }
                 messageText.append(statusText);
                 client.player.sendMessage(messageText,true);
